@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Schedule",
+  "description": "A comprehensive schedule for a university student, including daily and weekly recurring events, as well as one-time events.",
+  "type": "object",
+  "properties": {
+    "dailyRecurringEvents": {
+      "type": "array",
+      "description": "List of daily recurring events.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eventName": {
+            "type": "string",
+            "description": "Name of the event."
+          },
+          "startTime": {
+            "type": "string",
+            "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "description": "Start time of the event in HH:mm format."
+          },
+          "endTime": {
+            "type": "string",
+            "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "description": "End time of the event in HH:mm format."
+          }
+        },
+        "required": ["eventName", "startTime", "endTime"]
+      }
+    },
+    "weeklyRecurringEvents": {
+      "type": "array",
+      "description": "List of weekly recurring events.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eventName": {
+            "type": "string",
+            "description": "Name of the event."
+          },
+          "daysOfWeek": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+            },
+            "description": "List of days of the week when the event occurs."
+          },
+          "startTime": {
+            "type": "string",
+            "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "description": "Start time of the event in HH:mm format."
+          },
+          "endTime": {
+            "type": "string",
+            "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "description": "End time of the event in HH:mm format."
+          }
+        },
+        "required": ["eventName", "daysOfWeek", "startTime", "endTime"]
+      }
+    },
+    "oneTimeEvents": {
+      "type": "array",
+      "description": "List of one-time events.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eventName": {
+            "type": "string",
+            "description": "Name of the event."
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of the event in YYYY-MM-DD format."
+          },
+          "startTime": {
+            "type": "string",
+            "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "description": "Start time of the event in HH:mm format."
+          },
+          "endTime": {
+            "type": "string",
+            "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "description": "End time of the event in HH:mm format."
+          }
+        },
+        "required": ["eventName", "date", "startTime", "endTime"]
+      }
+    }
+  },
+  "required": ["dailyRecurringEvents", "weeklyRecurringEvents", "oneTimeEvents"]
+}
