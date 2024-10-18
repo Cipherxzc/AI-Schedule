@@ -126,7 +126,7 @@ conversation = RunnableWithMessageHistory(
 )
 
 
-schedule_file = 'schedule.json'
+schedule_file = './data/schedule.json'
 
 def generate_schedule(requirements):
     """

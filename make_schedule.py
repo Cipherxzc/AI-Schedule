@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 import matplotlib.cm as cm
 
 # 读取JSON文件
-def load_schedule_from_file(file_path):
-    with open(file_path, 'r') as file:
+def load_schedule_from_file(schedule_path):
+    with open(schedule_path, 'r') as file:
         schedule = json.load(file)
     return schedule
 
@@ -49,7 +49,7 @@ def zoom(event):
     ax.figure.canvas.draw()
 
 # 渲染计划表
-def render_schedule(schedule):
+def render_schedule(schedule, image_path):
     global ax  # 为了在缩放函数中使用 ax
     occupied = initialize_occupied()  # 初始化 occupied 数组
     event_color_map = {}  # 记录每个事件的颜色映射
@@ -185,11 +185,17 @@ def render_schedule(schedule):
 
     # 显示图表
     plt.tight_layout(rect=[0, 0, 1, 0.95])  # 为标题留出更多空间
-    plt.show()
+    # plt.show()
 
-# 主函数
+    plt.savefig(image_path)
+    plt.close(fig)
+
+schedule_path = r"./data/schedule.json"  # 使用 r 来避免转义字符
+image_path = r"./data/schedule.png"
+
+def make_schedule():
+    schedule = load_schedule_from_file(schedule_path)
+    render_schedule(schedule, image_path)
+
 if __name__ == "__main__":
-    # 给定的JSON文件路径
-    file_path = r"./schedule.json"  # 使用 r 来避免转义字符
-    schedule = load_schedule_from_file(file_path)
-    render_schedule(schedule)
+    make_schedule()
