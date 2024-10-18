@@ -1,5 +1,67 @@
 {
-  "dailyRecurringEvents": [],
-  "weeklyRecurringEvents": [],
-  "oneTimeEvents": []
+  "dailyRecurringEvents": [
+    {
+      "eventName": "Morning Exercise",
+      "startTime": "07:00",
+      "endTime": "08:00"
+    },
+    {
+      "eventName": "Study Session",
+      "startTime": "09:00",
+      "endTime": "11:00"
+    },
+    {
+      "eventName": "Lunch Break",
+      "startTime": "12:00",
+      "endTime": "13:00"
+    },
+    {
+      "eventName": "Evening Study",
+      "startTime": "17:00",
+      "endTime": "19:00"
+    }
+  ],
+  "weeklyRecurringEvents": [
+    {
+      "eventName": "Class",
+      "daysOfWeek": [
+        "Monday",
+        "Wednesday",
+        "Friday"
+      ],
+      "startTime": "10:00",
+      "endTime": "11:30"
+    },
+    {
+      "eventName": "Group Study",
+      "daysOfWeek": [
+        "Tuesday",
+        "Thursday"
+      ],
+      "startTime": "14:00",
+      "endTime": "16:00"
+    },
+    {
+      "eventName": "Club Meeting",
+      "daysOfWeek": [
+        "Monday"
+      ],
+      "startTime": "18:00",
+      "endTime": "19:00"
+    }
+  ],
+  "oneTimeEvents": [
+    {
+      "eventName": "Midterm Exam",
+      "date": "2023-10-15",
+      "startTime": "09:00",
+      "endTime": "12:00"
+    },
+    {
+      "eventName": "Project Presentation",
+      "date": "2023-11-01",
+      "startTime": "13:00",
+      "endTime": "15:00"
+    }
+  ]
 }

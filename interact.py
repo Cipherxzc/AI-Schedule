@@ -39,8 +39,8 @@ prompt = ChatPromptTemplate.from_messages([
 with open('schedule_schema.json', 'r') as file:
     schema_json = json.load(file)
 
-schema_tool = convert_to_openai_tool(schema_json, strict=True)
-tools = {"Schedule": schema_tool}
+# schema_tool = convert_to_openai_tool(schema_json, strict=True)
+# tools = {"Schedule": schema_tool}
 
 # llm = AzureChatOpenAI(
 #     azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
@@ -146,8 +146,8 @@ def generate_schedule(requirements):
                                  config={"configurable": {"session_id": "foo"}},)
 
     output = json.loads(output.content)
-    print(store)
-    print('\n')
+    # print(store)
+    # print('\n')
 
     with open(schedule_file, 'w') as outfile:
         json.dump(output, outfile, indent=2)
