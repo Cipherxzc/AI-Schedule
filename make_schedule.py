@@ -28,29 +28,8 @@ def mark_time_as_occupied(occupied, day_idx, start_time, end_time):
     for minute in range(start_time, end_time):
         occupied[day_idx][minute] = True
 
-# 缩放函数，使用滚轮事件来调整缩放
-def zoom(event):
-    cur_xlim = ax.get_xlim()
-    cur_ylim = ax.get_ylim()
-
-    # 获取鼠标位置
-    xdata = event.xdata
-    ydata = event.ydata
-
-    # 根据滚轮方向调整缩放比例
-    scale_factor = 1.2 if event.button == 'up' else 1 / 1.2
-
-    # 计算新的x轴和y轴范围
-    new_xlim = [xdata - (xdata - cur_xlim[0]) * scale_factor, xdata + (cur_xlim[1] - xdata) * scale_factor]
-    new_ylim = [ydata - (ydata - cur_ylim[0]) * scale_factor, ydata + (cur_ylim[1] - ydata) * scale_factor]
-
-    ax.set_xlim(new_xlim)
-    ax.set_ylim(new_ylim)
-    ax.figure.canvas.draw()
-
-# 渲染计划表
+# 处理计划表数据并渲染
 def render_schedule(schedule, image_path):
-    global ax  # 为了在缩放函数中使用 ax
     occupied = initialize_occupied()  # 初始化 occupied 数组
     event_color_map = {}  # 记录每个事件的颜色映射
 
@@ -65,7 +44,7 @@ def render_schedule(schedule, image_path):
     start_of_week = today - timedelta(days=today.weekday())
     end_of_week = start_of_week + timedelta(days=6)
 
-    # 渲染一次性事件
+    # 处理一次性事件
     for event in schedule["oneTimeEvents"]:
         event_date_str = event["date"]
         event_date = datetime.strptime(event_date_str, "%Y-%m-%d")  # 将字符串转换为datetime对象
@@ -83,7 +62,7 @@ def render_schedule(schedule, image_path):
                     'endTime': end_time
                 })
 
-    # 渲染每周重复事件
+    # 处理每周重复事件
     for event in schedule["weeklyRecurringEvents"]:
         start_time = time_to_minutes(event["startTime"])
         end_time = time_to_minutes(event["endTime"])
@@ -100,7 +79,7 @@ def render_schedule(schedule, image_path):
                     'endTime': end_time
                 })
 
-    # 渲染每日重复事件
+    # 处理每日重复事件
     for event in schedule["dailyRecurringEvents"]:
         start_time = time_to_minutes(event["startTime"])
         end_time = time_to_minutes(event["endTime"])
@@ -179,9 +158,6 @@ def render_schedule(schedule, image_path):
         # 在 x 轴上方的位置（每一天的中心）添加日期文本
         ax.text(day_idx, -100, event_date.strftime('%Y-%m-%d'),
             ha='center', va='bottom', fontsize=10, color='black')
-
-    # 连接滚轮事件处理程序，实现缩放
-    fig.canvas.mpl_connect('scroll_event', zoom)
 
     # 显示图表
     plt.tight_layout(rect=[0, 0, 1, 0.95])  # 为标题留出更多空间

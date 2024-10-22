@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-container style="height: 630px; border: 1px solid #eee;">
+        <el-container style="height: 100vh; border: 1px solid #eee;">
             <!-- 侧边栏 -->
             <el-aside v-if="showSidebar" style="display: flex; flex-direction: column; height: 100%; width: 200px; border-right: 0.2px solid #ccc;">
                 <!-- 添加对话按钮区域 -->
@@ -78,24 +78,30 @@ export default {
             this.selectedConversationIndex = index;
         },
         sendQuery() {
+            // 获取用户输入的内容，并去除首尾空格
             const messageContent = this.textarea.trim();
             if (messageContent) {
+                // 创建一个新的消息对象，表示用户发送的消息
                 const newMessage = {
                     self: true, // true 表示用户发送的消息
                     content: messageContent,
                     type: 'text'
                 };
+                // 获取当前选中对话的内容
                 const conversation = this.conversationContent[this.selectedConversationIndex];
+                
+                 // 将用户消息添加到当前对话中
                 conversation.push(newMessage);
 
+
                 axios.post('http://127.0.0.1:7000/query', { text: messageContent }, {
-                    responseType: 'blob' // 指定响应类型为 blob
+                    responseType: 'blob' // 指定响应类型为二进制数据（blob）
                 })
                 .then(response => {
                     const AIMessage = {
                         self: false, // false 表示 AI 发送的消息
-                        content: URL.createObjectURL(response.data),
-                        type: 'image'
+                        content: URL.createObjectURL(response.data),// 将响应的二进制数据转换为 URL
+                        type: 'image'// 消息类型为图像
                     };
                     conversation.push(AIMessage);
                     this.textarea = ''; // 清空输入框
